@@ -67,7 +67,16 @@ public struct Session: Codable {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             name = try container.decodeIfPresent(String.self, forKey: .name)
             description = try container.decodeIfPresent(String.self, forKey: .description)
-            icons = try container.decodeIfPresent([URL].self, forKey: .icons) ?? []
+            let images = try container.decodeIfPresent([String].self, forKey: .icons) ?? []
+            
+            var icons:[URL] = []
+            for icon in images {
+                if let url = URL(string: icon) {
+                    icons.append(url)
+                }
+            }
+            self.icons = icons
+            
             url = try container.decodeIfPresent(URL.self, forKey: .url) ?? URL(string: "https://nftst.net")!
             scheme = try container.decodeIfPresent(String.self, forKey: .scheme)
         }
