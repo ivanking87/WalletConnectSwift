@@ -2,13 +2,13 @@
 import PackageDescription
 
 let package = Package(
-    name: "WalletConnectSwift",
+    name: "WalletConnectSwiftMy",
     platforms: [
         .macOS(.v10_14), .iOS(.v13),
     ],
     products: [
         .library(
-            name: "WalletConnectSwift",
+            name: "WalletConnectSwiftMy",
             targets: ["WalletConnectSwift"])
     ],
     dependencies: [
@@ -16,10 +16,10 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "WalletConnectSwift", 
+            name: "WalletConnectSwiftMy", 
             dependencies: ["CryptoSwift"],
             path: "Sources"),
-        .testTarget(name: "WalletConnectSwiftTests", dependencies: ["WalletConnectSwift"], path: "Tests"),
+        .testTarget(name: "WalletConnectSwiftTests", dependencies: ["WalletConnectSwiftMy"], path: "Tests"),
     ],
     swiftLanguageVersions: [.v5]
 )
