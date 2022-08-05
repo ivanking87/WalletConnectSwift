@@ -41,16 +41,44 @@ public struct Session: Codable {
     public struct ClientMeta: Codable, Equatable {
         public let name: String?
         public let description: String?
-        public let icons: [URL?]
+        public let icons: [URL]
         public let url: URL
         public let scheme: String?
 
-        public init(name: String?, description: String?, icons: [URL?], url: URL, scheme: String? = nil) {
+        public init(name: String?, description: String?, icons: [URL], url: URL, scheme: String? = nil) {
             self.name = name
             self.description = description
             self.icons = icons
             self.url = url
             self.scheme = scheme
+        }
+        
+        
+        enum CodingKeys: String, CodingKey {
+            case name
+            case description
+            case icons
+            case url
+            case scheme
+            
+        }
+        
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            name = try container.decodeIfPresent(String.self, forKey: .name)
+            description = try container.decodeIfPresent(String.self, forKey: .description)
+            icons = try container.decodeIfPresent([URL].self, forKey: .icons) ?? []
+            url = try container.decodeIfPresent(URL.self, forKey: .url) ?? URL(string: "https://nftst.net")!
+            scheme = try container.decodeIfPresent(String.self, forKey: .scheme)
+        }
+        
+        public func encode(to encoder: Encoder) throws {
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            try container.encodeIfPresent(name, forKey: .name)
+            try container.encodeIfPresent(description, forKey: .description)
+            try container.encodeIfPresent(icons, forKey: .icons)
+            try container.encodeIfPresent(url, forKey: .url)
+            try container.encodeIfPresent(scheme, forKey: .scheme)
         }
     }
 
