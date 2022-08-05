@@ -39,13 +39,13 @@ public struct Session: Codable {
     }
 
     public struct ClientMeta: Codable, Equatable {
-        public let name: String
+        public let name: String?
         public let description: String?
         public let icons: [URL]
         public let url: URL
         public let scheme: String?
 
-        public init(name: String, description: String?, icons: [URL], url: URL, scheme: String? = nil) {
+        public init(name: String?, description: String?, icons: [URL], url: URL, scheme: String? = nil) {
             self.name = name
             self.description = description
             self.icons = icons
