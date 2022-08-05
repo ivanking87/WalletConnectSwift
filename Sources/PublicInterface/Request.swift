@@ -149,12 +149,7 @@ internal extension JSONRPC_2_0.ValueType {
     func decode<T: Decodable>(to type: T.Type) throws -> T {
         let data = try JSONEncoder.encoder().encode([self]) // wrap in array because values can be primitive types which is invalid json
         var result:[T] = []
-        do {
-            result = try JSONDecoder().decode([T].self, from: data)
-        } catch  {
-            print(error)
-        }
-        
+        result = try JSONDecoder().decode([T].self, from: data)
         return result[0]
     }
 }
